@@ -1,0 +1,53 @@
+[
+  {
+    "Task_ID": 1,
+    "Consumer": "consumer1",
+    "Title": "Kopiera filen testfil från mappen From till mappen To",
+    "Command": "CopyFiles",
+    "Input_path": "src/main/java/org/example/",
+    "Input_folder": "From",
+    "Input_files": "testfil.txt",
+    "Output_path": "src/main/java/org/example/",
+    "Output_folder": "To",
+    "Output_files": "testfilKopierad.txt"
+  },
+  {
+    "Task_ID": 2,
+    "Consumer": "consumer1",
+    "Title": "Radera filen tabort.txt från mappen radera",
+    "Command": "DeleteFile",
+    "Input_path": "src/main/java/org/example/",
+    "Input_folder": "Delete",
+    "Input_files": "tabort.txt"
+  },
+  {
+    "Task_ID": 3,
+    "Consumer": "consumer2",
+    "Title": "Skapa filen skapad.txt i mappen Created",
+    "Command": "CreateFile",
+    "Input_path": "src/main/java/org/example/",
+    "Input_folder": "Created",
+    "Input_files": "skapad.txt"
+  },
+  {
+    "Task_ID": 4,
+    "Consumer": "consumer2",
+    "Title": "Kopiera filen skapad från mappen Created till mappen To",
+    "Command": "CopyFiles",
+    "Input_path": "src/main/java/org/example/",
+    "Input_folder": "Created",
+    "Input_files": "skapad.txt",
+    "Output_path": "src/main/java/org/example/",
+    "Output_folder": "To",
+    "Output_files": "kopieradfil.txt"
+  },
+  {
+    "Task_ID": 5,
+    "Consumer": "consumer2",
+    "Title": "Radera filen skapad.txt från mappen Created",
+    "Command": "DeleteFile",
+    "Input_path": "src/main/java/org/example/",
+    "Input_folder": "Created",
+    "Input_files": "skapad.txt"
+  }
+]
