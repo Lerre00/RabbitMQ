@@ -1,3 +1,4 @@
+/*
 package org.example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,30 +13,35 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Consumer2 {
-    private final static String QUEUE_NAME = "simple_queue";
+    private final static String QUEUE_NAME2 = "simple_queue2";
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost"); // Replace with your RabbitMQ server's host
+        factory.setHost("localhost");
 
         try (Connection connection = factory.newConnection();
              Channel channel = connection.createChannel()) {
 
             //channel.queuePurge(QUEUE_NAME);
 
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            channel.queueDeclare(QUEUE_NAME2, false, false, false, null);
             System.out.println(" [*] Waiting for messages. To stop, type 'z' and press Enter.");
 
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), "UTF-8");
-                System.out.println(" [x] Received '" + message + "'");
-                if(message.contains("consumer2")) {
-                    System.out.println(" [x] Received '" + message + "'");
+                ObjectMapper objectMapper = new ObjectMapper();
+                // Deserialize the JSON message into a Map
+                Map<String, Object> taskMap = objectMapper.readValue(message, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
+                });
 
-                    // Deserialize the JSON message into a Map
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Map<String, Object> taskMap = objectMapper.readValue(message, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
-                    });
+                String consumer = (String) taskMap.get("Consumer");
+                String taskID = (String) taskMap.get("Task_ID");
+                System.out.println(consumer);
+                //System.out.println(" [x] Received '" + message + "'");
+
+                    System.out.println(" [x] Received '" + taskID + "'");
+
+
 
                     // Extract relevant information based on the "Command" field
                     String command = (String) taskMap.get("Command");
@@ -50,14 +56,14 @@ public class Consumer2 {
                     else if (command.equals("CreateFile")) {
                         createFile(taskMap);
                     }
-                }
+
             };
 
             Scanner scanner = new Scanner(System.in);
 
             // Continuous message consumption loop
             while (true) {
-                channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
+                channel.basicConsume(QUEUE_NAME2, true, deliverCallback, consumerTag -> { });
                 // Check for user input to stop the consumer
                 if (scanner.hasNextLine()) {
                     String userInput = scanner.nextLine();
@@ -149,3 +155,4 @@ public class Consumer2 {
     }
 }
 
+ */

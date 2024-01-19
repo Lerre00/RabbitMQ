@@ -11,10 +11,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-public class Producer {
+public class Producer2 {
 
     private final static String QUEUE_NAME = "simple_queue";
-    private final static String QUEUE_NAME2 = "simple_queue2";
 
     public static void main(String[] argv) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
@@ -34,17 +33,9 @@ public class Producer {
                 // Convert task to JSON string
                 String taskJson = convertTaskToJson(task);
 
-                // Send the JSON string to the queue
-                if(taskJson.contains("consumer1")) {
                     channel.basicPublish("", QUEUE_NAME, null, taskJson.getBytes());
                     System.out.println(" [x] Sent '" + taskJson + "' to consumer1");
                     Thread.sleep(1000); // Sleep for 1 second between messages
-                }
-                else if (taskJson.contains("consumer2")){
-                    channel.basicPublish("", QUEUE_NAME2, null, taskJson.getBytes());
-                    System.out.println(" [x] Sent '" + taskJson + "' to consumer2");
-                    Thread.sleep(1000); // Sleep for 1 second between messages
-                }
             }
         }
     }

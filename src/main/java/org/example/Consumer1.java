@@ -1,3 +1,4 @@
+/*
 package org.example;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.*;
@@ -26,14 +27,15 @@ public class Consumer1 {
 
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), "UTF-8");
-                System.out.println(" [x] Received '" + message + "'");
-                if(message.contains("consumer1")) {
-                    System.out.println(" [x] Received '" + message + "'");
+                // Deserialize the JSON message into a Map
+                ObjectMapper objectMapper = new ObjectMapper();
+                Map<String, Object> taskMap = objectMapper.readValue(message, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
+                });
+                String consumer = (String) taskMap.get("Consumer");
+                String task = (String) taskMap.get("Task_ID");
+                System.out.println(consumer);
 
-                    // Deserialize the JSON message into a Map
-                    ObjectMapper objectMapper = new ObjectMapper();
-                    Map<String, Object> taskMap = objectMapper.readValue(message, new com.fasterxml.jackson.core.type.TypeReference<Map<String, Object>>() {
-                    });
+                    System.out.println(" [x] Received '" + task + "'");
 
                     // Extract relevant information based on the "Command" field
                     String command = (String) taskMap.get("Command");
@@ -44,7 +46,7 @@ public class Consumer1 {
                     } else if (command.equals("DeleteFile")) {
                         deleteFile(taskMap);
                     }
-                }
+
             };
 
             Scanner scanner = new Scanner(System.in);
@@ -117,3 +119,5 @@ public class Consumer1 {
         }
     }
 }
+
+ */
